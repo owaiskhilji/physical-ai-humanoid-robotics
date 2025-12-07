@@ -1,0 +1,71 @@
+
+> physical-ai-humanoid-robotics@0.0.0 build
+> docusaurus build
+
+[INFO] [en] Creating an optimized production build...
+[90m[[90mwebpackbar[90m][39m [36mΓä╣[39m Compiling Client
+[90m[[90mwebpackbar[90m][39m [36mΓä╣[39m Compiling Server
+[90m[[90mwebpackbar[90m][39m [32mΓ£ö[39m Server: Compiled with some errors in 5.12s
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|G:\hacka\physical-ai-textbook-final\node_modules\@docusaurus\mdx-loader\lib\index.js??ruleSet[1].rules[8].use[0]!G:\hacka\physical-ai-textbook-final\docs\chapter5-vla.md': No serializer registered for VFileMessage
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> Error -> VFileMessage
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|G:\hacka\physical-ai-textbook-final\node_modules\@docusaurus\mdx-loader\lib\index.js??ruleSet[1].rules[8].use[0]!G:\hacka\physical-ai-textbook-final\docs\chapter5-vla_capstone_project.md': No serializer registered for VFileMessage
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> Error -> VFileMessage
+[90m[[90mwebpackbar[90m][39m [32mΓ£ö[39m Client: Compiled with some errors in 40.42s
+[ERROR] Client bundle compiled with errors therefore further build is impossible.
+Error: MDX compilation failed for file "G:\hacka\physical-ai-textbook-final\docs\chapter5-vla.md"
+Cause: Could not parse expression with acorn
+Details:
+{
+  "cause": {
+    "pos": 31418,
+    "loc": {
+      "line": 384,
+      "column": 50
+    },
+    "raisedAt": 3
+  },
+  "column": 51,
+  "file": "",
+  "message": "Could not parse expression with acorn",
+  "line": 384,
+  "name": "384:51",
+  "place": {
+    "line": 384,
+    "column": 51,
+    "offset": 31418
+  },
+  "reason": "Could not parse expression with acorn",
+  "ruleId": "acorn",
+  "source": "micromark-extension-mdx-expression",
+  "url": "https://github.com/micromark/micromark-extension-mdx-expression/tree/main/packages/micromark-extension-mdx-expression#could-not-parse-expression-with-acorn"
+}
+
+--------------------------
+
+Error: MDX compilation failed for file "G:\hacka\physical-ai-textbook-final\docs\chapter5-vla_capstone_project.md"
+Cause: Could not parse expression with acorn
+Details:
+{
+  "cause": {
+    "pos": 9001,
+    "loc": {
+      "line": 108,
+      "column": 80
+    },
+    "raisedAt": 1
+  },
+  "column": 81,
+  "file": "",
+  "message": "Could not parse expression with acorn",
+  "line": 108,
+  "name": "108:81",
+  "place": {
+    "line": 108,
+    "column": 81,
+    "offset": 9001
+  },
+  "reason": "Could not parse expression with acorn",
+  "ruleId": "acorn",
+  "source": "micromark-extension-mdx-expression",
+  "url": "https://github.com/micromark/micromark-extension-mdx-expression/tree/main/packages/micromark-extension-mdx-expression#could-not-parse-expression-with-acorn"
+}

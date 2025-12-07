@@ -1,0 +1,7 @@
+.docusaurus/
+.env*
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+.vscode/
