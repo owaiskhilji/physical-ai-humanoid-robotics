@@ -1,0 +1,9 @@
+#! rag-chatbot-api-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: rag-chatbot-api-published
+    namespace: backend
+spec:
+    type: LoadBalancer

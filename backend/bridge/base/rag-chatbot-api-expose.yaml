@@ -1,0 +1,18 @@
+#! rag-chatbot-api-expose.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: rag-chatbot-api
+    namespace: backend
+    labels:
+        com.docker.compose.project: backend
+        com.docker.compose.service: rag-chatbot-api
+spec:
+    selector:
+        com.docker.compose.project: backend
+        com.docker.compose.service: rag-chatbot-api
+    ports:
+        - name: rag-chatbo-8000
+          port: 8000
+          targetPort: rag-chatbo-8000
