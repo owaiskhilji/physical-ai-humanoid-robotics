@@ -1,0 +1,76 @@
+# OpenAPI Contract: Chat Endpoints
+
+## POST /api/v1/chat/start
+Initialize a new chat session
+
+### Request
+```json
+{
+  "user_id": "string (optional)",
+  "session_title": "string (optional)"
+}
+```
+
+### Response 201 Created
+```json
+{
+  "session_id": "string (UUID)",
+  "session_title": "string",
+  "created_at": "datetime"
+}
+```
+
+## POST /api/v1/chat/message
+Send a message and receive a response
+
+### Request
+```json
+{
+  "session_id": "string (UUID)",
+  "message": "string",
+  "selected_text": "string (optional)"
+}
+```
+
+### Response 200 OK
+```json
+{
+  "session_id": "string (UUID)",
+  "response": "string",
+  "context_sources": [
+    {
+      "chapter_number": "integer",
+      "chapter_title": "string",
+      "content_snippet": "string"
+    }
+  ],
+  "timestamp": "datetime"
+}
+```
+
+## GET /api/v1/chat/session/{session_id}
+Retrieve chat history for a session
+
+### Response 200 OK
+```json
+{
+  "session_id": "string (UUID)",
+  "session_title": "string",
+  "messages": [
+    {
+      "id": "string (UUID)",
+      "role": "string (user|assistant)",
+      "content": "string",
+      "selected_text": "string (optional)",
+      "timestamp": "datetime"
+    }
+  ],
+  "created_at": "datetime",
+  "updated_at": "datetime"
+}
+```
+
+## DELETE /api/v1/chat/session/{session_id}
+Close and archive a chat session
+
+### Response 204 No Content

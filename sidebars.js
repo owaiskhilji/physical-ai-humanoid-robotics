@@ -37,6 +37,7 @@ const sidebars = {
         'tutorial-basics/create-a-blog-post',
         'tutorial-basics/deploy-your-site',
         'tutorial-basics/congratulations', 
+         
   
       ],
     },
@@ -46,6 +47,14 @@ const sidebars = {
       items: [
         'tutorial-extras/translate-your-site', 
         'tutorial-extras/manage-docs-versions', 
+  
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Chat Widget Int', // Naya Heading
+      items: [
+        'chat-widget-documentation'
   
       ],
     },

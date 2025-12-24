@@ -1,0 +1,58 @@
+# OpenAPI Contract: Content Management Endpoints
+
+## GET /api/v1/content/chapters
+List available textbook chapters
+
+### Response 200 OK
+```json
+{
+  "chapters": [
+    {
+      "chapter_number": "integer",
+      "chapter_title": "string",
+      "version": "string",
+      "published_at": "datetime",
+      "content_length": "integer"
+    }
+  ]
+}
+```
+
+## GET /api/v1/content/chapter/{chapter_number}
+Retrieve specific chapter content
+
+### Response 200 OK
+```json
+{
+  "chapter_number": "integer",
+  "chapter_title": "string",
+  "content_text": "string",
+  "version": "string",
+  "published_at": "datetime",
+  "word_count": "integer"
+}
+```
+
+## POST /api/v1/content/chapter
+Add or update textbook content (admin only)
+
+### Request
+```json
+{
+  "chapter_number": "integer",
+  "chapter_title": "string",
+  "content_text": "string",
+  "version": "string"
+}
+```
+
+### Response 201 Created
+```json
+{
+  "chapter_id": "string (UUID)",
+  "chapter_number": "integer",
+  "chapter_title": "string",
+  "version": "string",
+  "status": "string (processing|published)"
+}
+```

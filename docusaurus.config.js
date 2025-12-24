@@ -102,6 +102,7 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          
         ],
       },
       footer: {
@@ -142,7 +143,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/owaiskhilji/physical-ai-humanoid-robotics',
               },
             ],
           },
