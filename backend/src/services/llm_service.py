@@ -74,16 +74,16 @@ class LLMService:
                 if grounding_only:
                     prompt = f"""
                     You are an AI assistant for a Physical AI & Humanoid Robotics textbook.
-                    Answer the user's question based ONLY on the provided context from the textbook.
-                    Do not use any external knowledge or make up information.
-                    If the context doesn't contain information to answer the question, say so explicitly.
+                    Use the provided context from the textbook as a reference to answer the user's question.
+                    However, if the context doesn't contain sufficient information, you may supplement with your general knowledge.
+                    I will use the selected text as a reference, but provide a complete answer using my internal knowledge if needed.
 
                     Context from textbook:
                     {context_str}
 
                     User's question: {user_query}
 
-                    Provide a helpful answer based only on the textbook content:
+                    Provide a helpful answer combining the textbook content and your general knowledge as needed:
                     """
                 else:
                     prompt = f"""
@@ -145,19 +145,19 @@ class LLMService:
         Generate response specifically focused on selected text context
         """
         try:
-            # Create a prompt that strictly focuses on the selected text
+            # Create a prompt that uses the selected text as reference but allows general knowledge
             prompt = f"""
             You are an AI assistant for a Physical AI & Humanoid Robotics textbook.
-            Answer the user's question based ONLY on the provided selected text from the textbook.
-            Do not use any other textbook content or external knowledge.
-            If the selected text doesn't contain information to answer the question, say so explicitly.
+            Use the provided selected text as a reference to answer the user's question.
+            However, if the selected text doesn't contain sufficient information, you may supplement with your general knowledge.
+            I will use the selected text as a reference, but provide a complete answer using my internal knowledge if needed.
 
             Selected Text:
             {selected_text}
 
             User's question: {user_query}
 
-            Provide a helpful answer based only on the selected text:
+            Provide a helpful answer combining the selected text and your general knowledge as needed:
             """
 
             # Generate response

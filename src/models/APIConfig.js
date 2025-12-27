@@ -3,7 +3,8 @@
  */
 export class APIConfig {
   constructor(
-    baseUrl = this.getEnvVar('REACT_APP_API_URL') || 'https://representative-claire-owaiskhilji-f0476f0b.koyeb.app/api',
+     baseUrl = this.getEnvVar('REACT_APP_API_URL') || 'http://localhost:8000/api',
+    // baseUrl = 'http://localhost:8000/api',
     healthEndpoint = '/health',
     chatStartEndpoint = '/v1/chat/start',
     messageEndpoint = '/v1/chat/message',

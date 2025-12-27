@@ -83,9 +83,9 @@ export class SessionManager {
     }
   }
 
-  async sendMessage(sessionId, message, selectedText = null) {
+  async sendMessage(sessionId, message, selectedText = null, mode = 'DEFAULT') {
     try {
-      const response = await this.apiService.sendMessage(sessionId, message, selectedText);
+      const response = await this.apiService.sendMessage(sessionId, message, selectedText, mode);
 
       // Validate the response structure to ensure it has the expected fields
       if (!response || typeof response.response !== 'string') {

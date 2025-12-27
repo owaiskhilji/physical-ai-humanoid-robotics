@@ -6,27 +6,363 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
+/* Apple/Tesla Style Dark Theme with Charcoal Background and Neon Accents */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #00d4ff; /* Neon Blue */
+  --ifm-color-primary-dark: #00b8e6;
+  --ifm-color-primary-darker: #00a8d4;
+  --ifm-color-primary-darkest: #008cb2;
+  --ifm-color-primary-light: #1ad9ff;
+  --ifm-color-primary-lighter: #33e0ff;
+  --ifm-color-primary-lightest: #66eaff;
+  --ifm-color-secondary: #39ff14; /* Cyber Green */
+  --ifm-background-color: #0b0e14; /* Deep Charcoal */
+  --ifm-background-surface-color: #0f172a; /* Darker Surface */
+  --ifm-font-family-base: 'Inter', 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 212, 255, 0.15);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Dark mode theme (now default) */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #00d4ff; /* Neon Blue */
+  --ifm-color-primary-dark: #00b8e6;
+  --ifm-color-primary-darker: #00a8d4;
+  --ifm-color-primary-darkest: #008cb2;
+  --ifm-color-primary-light: #1ad9ff;
+  --ifm-color-primary-lighter: #33e0ff;
+  --ifm-color-primary-lightest: #66eaff;
+  --ifm-color-secondary: #39ff14; /* Cyber Green */
+  --ifm-background-color: #0b0e14; /* Deep Charcoal */
+  --ifm-background-surface-color: #0f172a; /* Darker Surface */
+  --ifm-color-emphasis-0: #ffffff;
+  --ifm-color-emphasis-100: #f1f5f9;
+  --ifm-color-emphasis-200: #e2e8f0;
+  --ifm-color-emphasis-300: #cbd5e1;
+  --ifm-color-emphasis-400: #94a3b8;
+  --ifm-color-emphasis-500: #64748b;
+  --ifm-color-emphasis-600: #475569;
+  --ifm-color-emphasis-700: #334155;
+  --ifm-color-emphasis-800: #1e293b;
+  --ifm-color-emphasis-900: #0f172a;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 212, 255, 0.15);
+}
+
+/* Global Styles */
+body {
+  background-color: #0b0e14 !important;
+  color: #e2e8f0;
+  font-family: 'Inter', 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+/* Neon Glow Effects */
+.neon-glow {
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+}
+
+.neon-glow-green {
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+}
+
+/* Cyber Border for code blocks and images */
+.cyber-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #00d4ff, #39ff14) 1;
+  border-radius: 8px;
+  position: relative;
+}
+
+.cyber-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00d4ff, #39ff14, #00d4ff);
+  z-index: -1;
+  border-radius: 8px;
+  animation: cyber-pulse 2s infinite alternate;
+}
+
+@keyframes cyber-pulse {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes grid-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Micro-interactions */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.interactive-element:hover {
+  transform: scale(1.05);
+}
+
+.interactive-element:hover.neon-glow {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+}
+
+.interactive-element:hover.neon-glow-green {
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+}
+
+/* Custom button styles */
+.button--neon {
+  background: linear-gradient(45deg, #00d4ff, #39ff14);
+  color: #0b0e14;
+  border: none;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.button--neon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.button--neon:hover::before {
+  left: 100%;
+}
+
+/* Sidebar and Navigation Glassmorphism */
+.navbar {
+  background: rgba(11, 14, 20, 0.9) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* Code block styling */
+.prism-code {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #00d4ff, #39ff14) 1;
+  border-radius: 8px;
+}
+
+/* Image styling */
+img {
+  border-radius: 8px;
+}
+
+/* Chatbot Mode Indicator Styles - Updated for light theme glassmorphism */
+.mode-indicator {
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+}
+
+.mode-indicator .indicator-badge {
+  transition: all 0.2s ease;
+}
+
+.mode-indicator.selected-text-mode {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
+}
+
+.mode-indicator.selected-text-mode .indicator-badge {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: #475569 !important;
+}
+
+.mode-indicator.default-mode {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+.mode-indicator.default-mode .indicator-badge {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: #475569 !important;
+}
+
+/* Interactive Timeline Styles */
+.timeline-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.timeline-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.timeline-date {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #60a5fa;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeline-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.timeline-status.completed {
+  background: rgba(22, 101, 52, 0.2);
+  color: #34d399;
+  border: 1px solid #34d399;
+}
+
+.timeline-status.inProgress {
+  background: rgba(146, 64, 14, 0.2);
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
+}
+
+.timeline-status.planned {
+  background: rgba(55, 48, 163, 0.2);
+  color: #a78bfa;
+  border: 1px solid #a78bfa;
+}
+
+.timeline-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-description {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.timeline-connector {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 2px;
+  height: 2rem;
+  background: linear-gradient(to bottom, #00d4ff, #39ff14);
+  z-index: -1;
+}
+
+.connector-line {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.connector-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(to bottom, #00d4ff, #39ff14);
+  animation: fillLine 2s ease-in-out infinite alternate;
+}
+
+@keyframes fillLine {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+/* Responsive design for timeline */
+@media (max-width: 768px) {
+  .timeline {
+    padding: 1rem;
+  }
+
+  .timeline-card {
+    max-width: 100%;
+  }
+}
+
+.selected-text-preview {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #cbd5e1 !important;
 }

@@ -83,22 +83,39 @@ class RAGService:
                 context_sources = await self.get_relevant_content(query)
                 context_text = " ".join([source["text"] for source in context_sources])
 
+                    # You are an AI assistant for a Physical AI & Humanoid Robotics textbook.
+                    # You are currently in SELECTED TEXT MODE.
+                    # Use the provided selected text as a reference to answer the user's question.
+                    # However, if the selected text doesn't contain sufficient information, you may supplement with your general knowledge.
+                    # I will use the selected text as a reference, but provide a complete answer using my internal knowledge if needed.
+                    # At the end of your response, add a note: '[Response based on selected text reference]'
+
+                    # Selected Text: {context_text}
+
+                    # User's question: {query}
+
+                    # Answer:
             # Prepare the prompt for the LLM
             if context_text:
                 if selected_text and use_selected_text_mode:
                     prompt = f"""
-                    You are an AI assistant for a Physical AI & Humanoid Robotics textbook.
-                    You are currently in SELECTED TEXT MODE.
-                    Answer the user's question based ONLY on the provided selected text from the textbook.
-                    Do not use any other textbook content or external knowledge.
-                    If the selected text doesn't contain information to answer the question, say so explicitly.
-                    At the end of your response, add a note: '[Response based on selected text only]'
+            You are an AI assistant for a Physical AI & Humanoid Robotics textbook.
+            You are currently in FOCUS MODE (Selected Text Mode).
+            
+            USER SELECTED TEXT: "{selected_text}"
+            
+            STRICT INSTRUCTIONS:
+            1. PRIMARY TOPIC: Use the selected text as your main subject. 
+            2. CONTEXTUAL ACCURACY: If asked for a definition (like 'VLA'), look at the textbook context (Humanoid Robotics) and explain it as 'Vision-Language-Action', not any random global meaning.
+            3. TRANSLATION & URDU: If the user asks to "Translate", "Urdu mein batao", or "Translate to any language", you MUST provide a high-quality translation of the selected text using your internal knowledge.
+            4. SIMPLIFICATION: If the user asks to "Simplify" or "Explain in easy words", break down the technical selected text into simple, layman terms.
+            5. NO EXCUSES: Do NOT say "information is missing in selection." Use the selection as a starting point and complete the answer using your own vast AI knowledge.
+            
+            At the end of your response, add: '[Response based on selection & AI knowledge]'
 
-                    Selected Text: {context_text}
-
-                    User's question: {query}
-
-                    Answer:
+            User's question: {query}
+            
+            Answer:
                     """
                 else:
                     prompt = f"""
@@ -117,8 +134,7 @@ class RAGService:
             else:
                 prompt = f"""
                 You are an AI assistant for a Physical AI & Humanoid Robotics textbook.
-                The system couldn't find relevant content in the textbook to answer the user's question.
-                Inform the user that you can only answer questions based on the textbook content.
+                I don't have specific textbook content for this question, but I'll do my best to help using my general knowledge.
 
                 User's question: {query}
 

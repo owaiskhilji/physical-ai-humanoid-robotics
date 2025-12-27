@@ -4,8 +4,11 @@ import ChatWindow from './ChatWindow';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import LoadingIndicator from './LoadingIndicator';
+import ModeIndicator from '../ModeIndicator';
 import { SessionManager } from './SessionManager';
 import { StorageManager } from '../../utils/storage';
+import textSelectionManager from '../../utils/textSelection';
+import ChatbotMode from '../../models/ChatbotMode';
 
 /**
  * Main ChatWidget component that manages state and coordinates sub-components
@@ -16,6 +19,8 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState(null);
+  const [chatMode, setChatMode] = useState(new ChatbotMode('DEFAULT', null, true));
+  const [selectedTextPreview, setSelectedTextPreview] = useState('');
 
   const messagesEndRef = useRef(null);
   const sessionManager = new SessionManager();
@@ -99,6 +104,24 @@ const ChatWidget = () => {
         }]);
       }
     })();
+
+    // Set up text selection manager callbacks
+    textSelectionManager.setOnModeChange((mode, selection) => {
+      setChatMode(new ChatbotMode(mode, selection?.content || null, true));
+      if (selection) {
+        setSelectedTextPreview(textSelectionManager.getTextPreview(selection.content));
+      } else {
+        setSelectedTextPreview('');
+      }
+    });
+
+    textSelectionManager.setOnTextSelection((selection) => {
+      console.log('Text selected:', selection);
+    });
+
+    textSelectionManager.setOnTextDeselection(() => {
+      console.log('Text deselected');
+    });
   }, []);
 
   // Auto-scroll to bottom when messages change
@@ -151,8 +174,19 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      // Send message via API
-      const { response: aiResponse } = await sessionManager.sendMessage(sessionId, messageText);
+      // Get selected text if in selected text mode
+      let selectedText = null;
+      if (chatMode.isSelectedTextMode()) {
+        selectedText = chatMode.getSelectedText();
+      }
+
+      // Send message via API with selected text and mode
+      const { response: aiResponse } = await sessionManager.sendMessage(
+        sessionId,
+        messageText,
+        selectedText,
+        chatMode.getCurrentMode()
+      );
 
       // Add AI response to messages
       setMessages(prev => [...prev, {
@@ -174,6 +208,14 @@ const ChatWidget = () => {
         status: 'error'
       }]);
     } finally {
+      // Clear the text selection after sending the message to avoid confusion
+      // The context has been sent to the AI, so the selection is no longer needed
+      textSelectionManager.clearSelection();
+
+      // Reset the chat mode back to DEFAULT after sending the message
+      // This ensures the mode doesn't stay stuck in SELECTED_TEXT mode
+      setChatMode(new ChatbotMode('DEFAULT', null, true));
+
       setIsLoading(false);
     }
   };
@@ -228,7 +270,12 @@ const ChatWidget = () => {
         onMinimize={handleMinimize}
         title="AI Assistant"
       >
-        <div className="flex-1 overflow-y-auto p-4 bg-gray-50" ref={messagesEndRef}>
+        <div className="flex-1 overflow-y-auto p-4 bg-white/30 backdrop-blur-sm" ref={messagesEndRef}>
+          <ModeIndicator
+            mode={chatMode.getCurrentMode()}
+            selectedTextPreview={selectedTextPreview}
+            onSwitchToDefault={chatMode.isSelectedTextMode() ? () => setChatMode(new ChatbotMode('DEFAULT', null, true)) : null}
+          />
           {messages.map((msg) => (
             <ChatMessage
               key={msg.id}
@@ -259,10 +306,12 @@ const ChatWidget = () => {
           onClick={handleExpand}
           className={`
             fixed bottom-6 right-6 z-[9999]
-            px-4 py-2 rounded-full shadow-lg
-            bg-blue-600 text-white
+            px-4 py-2 rounded-full shadow-xl
+            bg-white text-blue-500
             transition-all duration-300 ease-in-out
-            hover:bg-blue-700
+            hover:bg-gray-50
+            border border-gray-200
+            chat-widget
           `}
         >
           Chat

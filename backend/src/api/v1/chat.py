@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status,Request
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 import datetime
@@ -9,7 +9,7 @@ from slowapi.util import get_remote_address
 from src.api.deps import get_db
 from src.models.chat import (
     ChatSessionCreate, ChatSessionResponse, ChatMessageCreate,
-    ChatMessageResponse, ChatRequest, ChatResponse
+    ChatMessageResponse, ChatRequest, ChatResponse, ModeStatusResponse
 )
 from src.services.chat_service import ChatService
 from src.services.rag_service import RAGService
@@ -66,8 +66,9 @@ async def send_message(
     try:
         print(f"DEBUG: Received message for session_id: {chat_request.session_id}")
         print(f"DEBUG: Received message for session_id: {chat_request.message}")
-        # Determine if selected text mode should be used
-        use_selected_text_mode = bool(chat_request.selected_text)
+        print(f"DEBUG: Received mode: {chat_request.mode}")
+        # Determine if selected text mode should be used based on the mode parameter
+        use_selected_text_mode = (chat_request.mode == "SELECTED_TEXT") and bool(chat_request.selected_text)
         print(f"DEBUG: use_selected_text_mode set to {use_selected_text_mode}")
 
         # Add user message to session
@@ -188,4 +189,46 @@ async def close_chat_session(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to close chat session"
+        )
+
+
+@router.get("/chat/mode-status", response_model=ModeStatusResponse)
+@limiter.limit("50/minute")  # Limit to 50 mode status requests per minute per IP
+async def get_mode_status(
+    request: Request,
+    session_id: str,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Get current chat mode status for the session
+    """
+    try:
+        # Get the most recent message for the session to determine current mode
+        # We'll look at the last message to see if it was sent in selected text mode
+        messages = await ChatService.get_messages_by_session(db, session_id)
+
+        # Default to DEFAULT mode if no messages exist
+        current_mode = "DEFAULT"
+        selected_text = None
+        is_active = True
+
+        # If there are messages, check the most recent one for mode info
+        if messages:
+            # Get the last message
+            last_message = messages[-1]
+            if last_message.is_selected_text_mode:
+                current_mode = "SELECTED_TEXT"
+                selected_text = last_message.selected_text
+
+        return ModeStatusResponse(
+            mode=current_mode,
+            selectedText=selected_text,
+            isActive=is_active,
+            lastUpdated=datetime.datetime.utcnow().isoformat()
+        )
+    except Exception as e:
+        logger.error(f"Error getting mode status: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to retrieve mode status"
         )

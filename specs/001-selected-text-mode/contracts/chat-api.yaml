@@ -1,0 +1,119 @@
+# Chat API Contract: Selected Text Mode
+
+## Updated Chat Endpoint
+
+### POST `/api/chat`
+Process user chat message with support for dual-mode operation (Default vs Selected Text Mode)
+
+#### Request
+```json
+{
+  "message": "User's question or message",
+  "mode": "DEFAULT|SELECTED_TEXT",
+  "selectedText": "Optional selected text content when in SELECTED_TEXT mode",
+  "context": {
+    "sessionId": "Optional session identifier",
+    "userId": "Optional user identifier",
+    "pageUrl": "Current page URL for context"
+  }
+}
+```
+
+#### Response
+```json
+{
+  "id": "Response identifier",
+  "message": "AI-generated response",
+  "modeUsed": "DEFAULT|SELECTED_TEXT",
+  "sourceContext": "The context used for generating the response",
+  "confidence": 0.95,
+  "timestamp": "2025-12-24T10:30:00Z",
+  "metadata": {
+    "processingTime": 1200,
+    "tokensUsed": 150
+  }
+}
+```
+
+#### Error Responses
+- **400 Bad Request**: Invalid request format or missing required fields
+- **413 Payload Too Large**: Selected text exceeds maximum allowed length
+- **500 Internal Server Error**: Processing error
+
+### Schema Definitions
+
+#### ChatRequest
+```json
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "User's input message",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["DEFAULT", "SELECTED_TEXT"],
+      "description": "Operating mode for this request"
+    },
+    "selectedText": {
+      "type": "string",
+      "description": "Selected text content when in SELECTED_TEXT mode",
+      "maxLength": 5000,
+      "nullable": true
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "sessionId": {"type": "string"},
+        "userId": {"type": "string"},
+        "pageUrl": {"type": "string"}
+      }
+    }
+  },
+  "required": ["message", "mode"]
+}
+```
+
+#### ChatResponse
+```json
+{
+  "type": "object",
+  "properties": {
+    "id": {"type": "string"},
+    "message": {"type": "string"},
+    "modeUsed": {
+      "type": "string",
+      "enum": ["DEFAULT", "SELECTED_TEXT"]
+    },
+    "sourceContext": {"type": "string"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "processingTime": {"type": "integer"},
+        "tokensUsed": {"type": "integer"}
+      }
+    }
+  },
+  "required": ["id", "message", "modeUsed", "sourceContext", "timestamp"]
+}
+```
+
+## New Status Endpoint
+
+### GET `/api/chat/mode-status`
+Get current chat mode status for the session
+
+#### Response
+```json
+{
+  "mode": "DEFAULT|SELECTED_TEXT",
+  "selectedText": "Current selected text if any",
+  "isActive": true,
+  "lastUpdated": "2025-12-24T10:30:00Z"
+}
+```

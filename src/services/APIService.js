@@ -14,7 +14,7 @@ export class APIService {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error('Request timeout: The server is taking too long to respond. Please try again.'));
-        }, 10000); // 10 second timeout for health check
+        }, 15000); // 15 second timeout for health check (increased from 10s)
       });
 
       // Create the fetch promise
@@ -42,7 +42,7 @@ export class APIService {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error('Request timeout: The server is taking too long to respond. Please try again.'));
-        }, 10000); // 10 second timeout for session creation
+        }, 30000); // 30 second timeout for session creation (increased from 10s)
       });
 
       // Create the fetch promise
@@ -70,11 +70,12 @@ export class APIService {
     }
   }
 
-  async sendMessage(sessionId, message, selectedText = null) {
+  async sendMessage(sessionId, message, selectedText = null, mode = 'DEFAULT') {
     try {
       const requestBody = {
         session_id: sessionId,
         message: message,
+        mode: mode,  // Add mode parameter
       };
 
       if (selectedText) {
@@ -116,11 +117,11 @@ export class APIService {
 
   async getSession(sessionId) {
     try {
-      // Create a timeout promise
+      // Create a timeout promise with longer timeout for database operations
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error('Request timeout: The server is taking too long to respond. Please try again.'));
-        }, 10000); // 10 second timeout for getting session
+        }, 30000); // 30 second timeout for getting session (increased from 10s)
       });
 
       // Create the fetch promise
@@ -151,7 +152,7 @@ export class APIService {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(new Error('Request timeout: The server is taking too long to respond. Please try again.'));
-        }, 10000); // 10 second timeout for deleting session
+        }, 30000); // 30 second timeout for deleting session (increased from 10s)
       });
 
       // Create the fetch promise

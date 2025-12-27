@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from src.core.database import Base
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
+from typing import Literal  # Added for ModeStatusResponse
 from uuid import UUID, uuid4
 import datetime
 
@@ -86,3 +87,13 @@ class ChatRequest(BaseModel):
     session_id: str
     message: str = Field(..., min_length=1)
     selected_text: Optional[str] = None
+    mode: str = "DEFAULT"  # Add mode parameter with default value
+
+
+class ModeStatusResponse(BaseModel):
+    mode: Literal["DEFAULT", "SELECTED_TEXT"]
+    selectedText: Optional[str]
+    isActive: bool
+    lastUpdated: str
+
+

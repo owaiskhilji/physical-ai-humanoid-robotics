@@ -47,7 +47,7 @@ const ChatInput = ({ onSend, onClear, disabled = false, placeholder = "Type your
   }, [disabled]);
 
   return (
-    <div className="p-4 border-t border-gray-200 bg-white">
+    <div className="p-4 border-t border-gray-100 bg-white/50 backdrop-blur-sm chat-input">
       <form onSubmit={handleSubmit} className="flex items-end space-x-2">
         <div className="flex-1">
           <textarea
@@ -58,10 +58,13 @@ const ChatInput = ({ onSend, onClear, disabled = false, placeholder = "Type your
             placeholder={placeholder}
             disabled={disabled}
             className={`
-              w-full px-3 py-2 border rounded-lg resize-none
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
-              disabled:bg-gray-100 disabled:cursor-not-allowed
+              w-full px-3 py-2 border border-gray-200 rounded-xl resize-none
+              focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50
+              disabled:bg-gray-50 disabled:cursor-not-allowed
               text-sm
+              bg-white/80 backdrop-blur-sm
+              chat-input
+              text-gray-900
             `}
             rows="1"
             style={{ minHeight: '40px', maxHeight: '100px' }}
@@ -76,14 +79,14 @@ const ChatInput = ({ onSend, onClear, disabled = false, placeholder = "Type your
             type="submit"
             disabled={disabled || !inputValue.trim()}
             className={`
-              p-2 rounded-full
+              p-2.5 rounded-full
               ${inputValue.trim() && !disabled
-                ? 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-300'
-                : 'bg-gray-200 text-gray-400'
+                ? 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 shadow-sm'
+                : 'bg-gray-100 text-gray-400'
               }
               disabled:opacity-50 disabled:cursor-not-allowed
               transition-colors
-              focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50
+              focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50
             `}
             aria-label="Send message"
           >
@@ -95,11 +98,11 @@ const ChatInput = ({ onSend, onClear, disabled = false, placeholder = "Type your
             onClick={onClear}
             disabled={disabled}
             className={`
-              p-2 rounded-full
-              bg-gray-200 text-gray-600 hover:bg-gray-300 focus:ring-2 focus:ring-gray-300
+              p-2.5 rounded-full
+              bg-gray-100 text-gray-500 hover:bg-gray-200 focus:ring-2 focus:ring-gray-200 shadow-sm
               disabled:opacity-50 disabled:cursor-not-allowed
               transition-colors
-              focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50
+              focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50
             `}
             aria-label="Clear chat"
           >

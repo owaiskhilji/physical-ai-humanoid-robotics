@@ -81,7 +81,9 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       colorMode: {
-        respectPrefersColorScheme: true,
+        defaultMode: 'dark',
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
       },
       navbar: {
         title: 'Physical AI & Humanoid Robotics',
@@ -102,56 +104,64 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
-          
+
         ],
       },
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Resources',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Documentation',
                 to: '/docs/intro',
               },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Tutorials',
+                to: '/docs/chapter2-ros2',
               },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
               {
                 label: 'Blog',
                 to: '/blog',
               },
+            ],
+          },
+          {
+            title: 'Connect',
+            items: [
               {
                 label: 'GitHub',
                 href: 'https://github.com/owaiskhilji/physical-ai-humanoid-robotics',
               },
+              {
+                label: 'LinkedIn',
+                href: 'https://www.linkedin.com/in/owaiskhilji',
+              },
+              {
+                label: 'Upwork',
+                href: 'https://www.upwork.com/freelancers/~015154954fff6ead45?mp_source=share',
+              },
+            ],
+          },
+          {
+            title: 'Legal',
+            items: [
+              {
+                label: 'Privacy Policy',
+                href: '#',
+              },
+              {
+                label: 'Terms of Service',
+                href: '#',
+              },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics. Built with Docusaurus.`,
       },
       prism: {
-        theme: prismThemes.github,
+        theme: prismThemes.dracula,
         darkTheme: prismThemes.dracula,
       },
     }),
