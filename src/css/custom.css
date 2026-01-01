@@ -183,6 +183,15 @@ body {
   backdrop-filter: blur(12px);
 }
 
+/* Mobile Sidebar Z-Index Fix - ensure mobile sidebar appears above other elements */
+.navbar-sidebar {
+  z-index: 1050 !important; /* Higher than navbar and other elements */
+}
+
+.navbar-sidebar__backdrop {
+  z-index: 1040 !important; /* Slightly below the sidebar but above other content */
+}
+
 /* Code block styling */
 .prism-code {
   background: rgba(15, 23, 42, 0.9) !important;
